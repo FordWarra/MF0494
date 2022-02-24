@@ -6,8 +6,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import controlador.Controlador;
+import modelo.Infractor;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -26,6 +28,7 @@ import javax.swing.JTable;
 import java.awt.FlowLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class VentanaMostrarInfractores extends JFrame {
@@ -66,6 +69,21 @@ public class VentanaMostrarInfractores extends JFrame {
 		panel.add(scrollPane, "cell 0 1,grow");
 		
 		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null, null},
+			},
+			new String[] {
+				"DNI", "Nombre", "Apellidos", "Antiguedad", "Sanci\u00F3n", "Puntos"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				String.class, String.class, String.class, Integer.class, Float.class, Integer.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
 		scrollPane.setViewportView(table);
 		
 		JPanel panel_1 = new JPanel();
@@ -80,6 +98,24 @@ public class VentanaMostrarInfractores extends JFrame {
 		});
 		panel_1.add(btnNewButton);
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+	}
+
+
+	public void setControlador(Controlador controlador) {
+		this.controlador = controlador;
+	}
+
+
+	public void setListaInfracctores(ArrayList<Infractor> lista) {
+		DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+		modelo.setRowCount(0);
+		for (Infractor i : lista) {
+			Object fila [] = {
+					i.getDni(), i.getNombre(), i.getApellidos(), 
+					i.getAntiguedad(), i.getSancion(), i.getPuntos()
+			};
+			modelo.addRow(fila);
+		}
 	}
 
 

@@ -15,7 +15,7 @@ public class ConexionBD {
 
 	private static final String database = "dgt";
 	private static final String usuario = "root";
-	private static final String contraseña = "123456";
+	private static final String contraseña = "1401";
 	private static final String url="jdbc:mysql://localhost/"+database;
 	
 	private Connection conexion=null;
